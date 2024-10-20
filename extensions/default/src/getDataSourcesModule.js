@@ -5,6 +5,7 @@
 import { createDicomWebApi } from './DicomWebDataSource/index.js';
 import { createDicomJSONApi } from './DicomJSONDataSource/index.js';
 import { createDicomLocalApi } from './DicomLocalDataSource/index.js';
+import { createDicomIpfsApi } from './DicomIPFSDataSource/index.js';
 import { createDicomWebProxyApi } from './DicomWebProxyDataSource/index';
 import { createMergeDataSourceApi } from './MergeDataSource/index';
 
@@ -22,6 +23,11 @@ function getDataSourcesModule() {
       name: 'dicomwebproxy',
       type: 'webApi',
       createDataSource: createDicomWebProxyApi,
+    },
+    {
+      name: 'dicomipfs',
+      type: 'ipfsApi',
+      createDataSource: createDicomIpfsApi,
     },
     {
       name: 'dicomjson',
