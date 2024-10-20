@@ -25,7 +25,7 @@
 import { DICOMWeb, utils } from '@ohif/core';
 import { sortStudySeries } from '@ohif/core/src/utils/sortStudy';
 import axios  from 'axios';
-// import fetch from 'node-fetch';
+import fetch from 'node-fetch';
 
 const { getString, getName, getModalities } = DICOMWeb;
 
@@ -119,8 +119,7 @@ async function allStudies(config, studyInstanceUid, seriesInstanceUid, queryPara
 
   try {
     const response = await axios.get(url);
-    const objects = response.json();
-    return objects;
+    return response.data;
   } catch(error) {
     if (error.response) {
       // 服务器响应了错误状态码
@@ -148,11 +147,10 @@ async function seriesInStudy(config, studyInstanceUID) {
     includefield: commaSeparatedFields,
   };
 
-  let url = `${config.url}/studies/${studyInstanceUid}/series`;
+  let url = `${config.url}/studies/${studyInstanceUID}/series`;
   try {
     const response = await axios.get(url, queryParams);
-    const { objects } = response.data;
-    return objects;
+    return response.data;
   } catch (error) {
     console.log(error);
   }
@@ -163,11 +161,10 @@ async function retrieveStudyMetadata(config, studyInstanceUID) {
     "StudyInstanceUID": studyInstanceUID,
   };
 
-  let url = `${config.url}/instances`;
+  let url = `${config.url}/studies/${studyInstanceUID}/metadata`;
   try {
     const response = await axios.get(url, queryParams);
-    const { objects } = response.data;
-    return objects;
+    return response.data;
   } catch (error) {
     console.log(error);
   }

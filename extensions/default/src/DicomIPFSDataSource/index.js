@@ -12,6 +12,7 @@ import {
 
 import dcmjs from 'dcmjs';
 import getDirectURL from '../utils/getDirectURL';
+import getImageId from './getImageId.js';
 
 const { DicomMetaDictionary, DicomDict } = dcmjs.data;
 
