@@ -13,7 +13,7 @@ export default function getImageId({ instance, frame, config, thumbnail = false 
     return;
   }
 
-  let imageId = 'ipfs:'
+  let imageId = 'wadors:http://127.0.0.1:8080/ipfs/'
   const value = instance['PixelData'];
   if (value && value.BulkDataURI) {
     imageId += value.BulkDataURI;
