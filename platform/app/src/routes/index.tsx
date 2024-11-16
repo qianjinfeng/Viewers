@@ -8,6 +8,7 @@ import WorkList from './WorkList';
 import Local from './Local';
 import Debug from './Debug';
 import NotFound from './NotFound';
+import Searching from './Search';
 import buildModeRoutes from './buildModeRoutes';
 import PrivateRoute from './PrivateRoute';
 import PropTypes from 'prop-types';
@@ -65,6 +66,10 @@ const bakedInRoutes = [
   {
     path: '/debug',
     children: Debug,
+  },
+  {
+    path: '/esearch',
+    children: Searching,
   },
   {
     path: '/local',

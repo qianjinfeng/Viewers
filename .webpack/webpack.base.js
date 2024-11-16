@@ -196,6 +196,7 @@ module.exports = (env, argv, { SRC_DIR, ENTRY }) => {
         path.resolve(__dirname, '../../../node_modules'),
         path.resolve(__dirname, '../platform/app/node_modules'),
         path.resolve(__dirname, '../platform/ui/node_modules'),
+        path.resolve(__dirname, '../platform/ui-next/node_modules'),
         SRC_DIR,
       ],
       // Attempt to resolve these extensions in order.
