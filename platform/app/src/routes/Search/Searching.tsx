@@ -13,7 +13,7 @@ import { title } from 'process';
 
 const connector = new ElasticsearchAPIConnector({
   host: "http://localhost:9200",
-  index: "dicom",
+  index: "studies",
   apiKey: "SHlxdzRwSUJITEdvSlBXeUFzZFA6aFkzYkRWTDVSMDY0cmdKU2U4am5mUQ=="
 });
 
@@ -32,10 +32,7 @@ const configurationOptions = {
         raw: {}
       },
       StudyInstanceUID: {
-        snippet: {
-          size: 100,
-          fallback: true
-        }
+        raw: {}
       },
       StudyDate:{ raw:{}}
     },
@@ -91,7 +88,7 @@ const CustomResultView = ({ result, onClickLink}: {
     <div className="sui-result__header">
       <h3>
         {/* Maintain onClickLink to correct track click throughs for analytics*/}
-        <a onClick={onClickLink} href="http://localhost:3000/viewer?StudyInstanceUIDs=1.2.826.0.1.3680043.2.1125.1.11608962641993666019702920539307840">
+        <a onClick={onClickLink} href={`http://localhost:3000/viewer?StudyInstanceUIDs=${encodeURIComponent(result.StudyInstanceUID.raw)}`}>
           {result.title.raw}
         </a>
       </h3>
@@ -100,7 +97,7 @@ const CustomResultView = ({ result, onClickLink}: {
       {/* use 'raw' values of fields to access values without snippets */}
       <div className="sui-result__details">
         <p>{result.StudyDescription.raw} </p>
-        <p>{result.StudyInstanceUID.snippet} </p>
+        <p>{result.StudyInstanceUID.raw} </p>
       </div>
     </div>
   </li>
