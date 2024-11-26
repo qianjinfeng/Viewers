@@ -51,6 +51,7 @@
     "react-resize-detector": "^10.0.1"
   },
   "devDependencies": {
+    "@cornerstonejs/dicom-image-loader": "^2.2.16",
     "lodash": "^4.17.21"
   },
   "dependencies": {

@@ -13,7 +13,7 @@ import { title } from 'process';
 
 const connector = new ElasticsearchAPIConnector({
   host: "http://localhost:9200",
-  index: "studies",
+  index: "study",
   apiKey: "SHlxdzRwSUJITEdvSlBXeUFzZFA6aFkzYkRWTDVSMDY0cmdKU2U4am5mUQ=="
 });
 
