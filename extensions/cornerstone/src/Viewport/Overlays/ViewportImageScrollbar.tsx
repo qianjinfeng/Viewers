@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Enums, Types, utilities } from '@cornerstonejs/core';
-import { utilities as csToolsUtils } from '@cornerstonejs/tools';
+import { Enums, VolumeViewport3D, utilities as csUtils } from '@cornerstonejs/core';
 import { ImageScrollbar } from '@ohif/ui';
 
 function CornerstoneImageScrollbar({
@@ -12,7 +11,9 @@ function CornerstoneImageScrollbar({
   setImageSliceData,
   scrollbarHeight,
   servicesManager,
-}: withAppTypes) {
+}: withAppTypes<{
+  element: HTMLElement;
+}>) {
   const { cineService, cornerstoneViewportService } = servicesManager.services;
 
   const onImageScrollbarChange = (imageIndex, viewportId) => {
@@ -26,7 +27,7 @@ function CornerstoneImageScrollbar({
       cineService.setCine({ id: viewportId, isPlaying: false });
     }
 
-    csToolsUtils.jumpToSlice(viewport.element, {
+    csUtils.jumpToSlice(viewport.element, {
       imageIndex,
       debounceLoading: true,
     });
@@ -39,17 +40,21 @@ function CornerstoneImageScrollbar({
 
     const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
 
-    if (!viewport) {
+    if (!viewport || viewport instanceof VolumeViewport3D) {
       return;
     }
 
-    const imageIndex = viewport.getCurrentImageIdIndex();
-    const numberOfSlices = viewport.getNumberOfSlices();
+    try {
+      const imageIndex = viewport.getCurrentImageIdIndex();
+      const numberOfSlices = viewport.getNumberOfSlices();
 
-    setImageSliceData({
-      imageIndex: imageIndex,
-      numberOfSlices,
-    });
+      setImageSliceData({
+        imageIndex: imageIndex,
+        numberOfSlices,
+      });
+    } catch (error) {
+      console.warn(error);
+    }
   }, [viewportId, viewportData]);
 
   useEffect(() => {
@@ -64,6 +69,9 @@ function CornerstoneImageScrollbar({
 
     const updateIndex = event => {
       const viewport = cornerstoneViewportService.getCornerstoneViewport(viewportId);
+      if (!viewport || viewport instanceof VolumeViewport3D) {
+        return;
+      }
       const { imageIndex, newImageIdIndex = imageIndex } = event.detail;
       const numberOfSlices = viewport.getNumberOfSlices();
       // find the index of imageId in the imageIds

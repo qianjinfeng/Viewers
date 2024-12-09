@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import StudyItem from '../StudyItem';
-import StudyBrowserSort from '../StudyBrowserSort';
-import StudyBrowserViewOptions from '../StudyBrowserViewOptions';
+import { StudyItem } from '../StudyItem';
+import { StudyBrowserSort } from '../StudyBrowserSort';
+import { StudyBrowserViewOptions } from '../StudyBrowserViewOptions';
 
 const getTrackedSeries = displaySets => {
   let trackedSeries = 0;
@@ -31,6 +31,7 @@ const StudyBrowser = ({
   servicesManager,
   showSettings,
   viewPresets,
+  onThumbnailContextMenu,
 }: withAppTypes) => {
   const getTabContent = () => {
     const tabData = tabs.find(tab => tab.name === activeTabName);
@@ -60,6 +61,7 @@ const StudyBrowser = ({
               activeDisplaySetInstanceUIDs={activeDisplaySetInstanceUIDs}
               data-cy="thumbnail-list"
               viewPreset={viewPreset}
+              onThumbnailContextMenu={onThumbnailContextMenu}
             />
           </React.Fragment>
         );
@@ -68,24 +70,26 @@ const StudyBrowser = ({
   };
 
   return (
-    <React.Fragment>
-      {showSettings && (
-        <div
-          className="w-100 bg-bkg-low flex h-[48px] items-center justify-center gap-[10px] px-[8px] py-[10px]"
-          data-cy={'studyBrowser-panel'}
-        >
-          <StudyBrowserViewOptions
-            tabs={tabs}
-            onSelectTab={onClickTab}
-            activeTabName={activeTabName}
-          />
-          <StudyBrowserSort servicesManager={servicesManager} />
-        </div>
-      )}
-      <div className="ohif-scrollbar invisible-scrollbar bg-bkg-low flex flex-1 flex-col gap-[4px] overflow-auto">
+    <div
+      className="ohif-scrollbar invisible-scrollbar bg-bkg-low flex flex-1 flex-col gap-[4px] overflow-auto"
+      data-cy={'studyBrowser-panel'}
+    >
+      <div>
+        {showSettings && (
+          <div className="w-100 bg-bkg-low flex h-[48px] items-center justify-center gap-[10px] px-[8px] py-[10px]">
+            <>
+              <StudyBrowserViewOptions
+                tabs={tabs}
+                onSelectTab={onClickTab}
+                activeTabName={activeTabName}
+              />
+              <StudyBrowserSort servicesManager={servicesManager} />
+            </>
+          </div>
+        )}
         {getTabContent()}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 
@@ -140,4 +144,4 @@ StudyBrowser.propTypes = {
   ),
 };
 
-export default StudyBrowser;
+export { StudyBrowser };
