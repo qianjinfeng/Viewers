@@ -16,7 +16,7 @@ export default function areAllImageComponentsEqual(instances: Array<any>): boole
     const instance = instances[i];
     const { SamplesPerPixel } = instance;
 
-    if (SamplesPerPixel !== firstImageSamplesPerPixel) {
+    if (toNumber(SamplesPerPixel) !== firstImageSamplesPerPixel) {
       return false;
     }
   }
