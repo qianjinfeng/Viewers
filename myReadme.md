@@ -1,4 +1,4 @@
-"1 86987 wadors:http://127.0.0.1:8080/ipfs/QmerVyUkED7Rhyz9G3DEHA4mFyt91yQ47GxXTmehPhQmZY"
+"1 86987 wadors:http://127.0.0.1:8080/ipfs/QmerVyUkED7Rhyz9G3DEHA4mFyt91yQ47GxXTmehPhQmZY"   array element 173974
 imageData.scalarArray is fixed size to 1st image 86987
 
 "3 88797 355188 wadors:http://127.0.0.1:8080/ipfs/QmNizpvvqfEaZQH7MUUX2ARon5qwaibeEfJB3PSEbEoacm"

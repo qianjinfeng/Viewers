@@ -426,6 +426,12 @@ class MetadataProvider {
         };
         break;
 
+      case 'transferSyntax':
+        metadata = {
+          transferSyntaxUID: instance.TransferSyntaxUID,
+        };
+        break;
+
       default:
         return;
     }
