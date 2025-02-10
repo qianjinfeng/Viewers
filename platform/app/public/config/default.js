@@ -86,7 +86,7 @@ window.config = {
       ],
     },
   ],
-  defaultDataSourceName: 'dicomweb',
+  defaultDataSourceName: 'ipfs',
   /* Dynamic config allows user to pass "configUrl" query string this allows to load config without recompiling application. The regex will ensure valid configuration source */
   // dangerouslyUseDynamicConfig: {
   //   enabled: true,
@@ -126,7 +126,34 @@ window.config = {
         omitQuotationForMultipartRequest: true,
       },
     },
-
+    {
+      namespace: '@ohif/extension-default.dataSourcesModule.dicomipfs',
+      sourceName: 'ipfs',
+      configuration: {
+        friendlyName: 'ipfs wado server',
+        name: 'ipfs',
+        wadoUriRoot: 'http://localhost:4000',
+        qidoRoot: 'http://127.0.0.1:4000',
+        wadoRoot: 'http://localhost:4000',
+        qidoSupportsIncludeField: false,
+        imageRendering: 'wadors',
+        thumbnailRendering: 'wadors',
+        enableStudyLazyLoad: true,
+        supportsFuzzyMatching: false,
+        supportsWildcard: true,
+        staticWado: true,
+        singlepart: 'bulkdata,video',
+        // whether the data source should use retrieveBulkData to grab metadata,
+        // and in case of relative path, what would it be relative to, options
+        // are in the series level or study level (some servers like series some study)
+        bulkDataURI: {
+          enabled: true,
+          relativeResolution: 'studies',
+          transform: url => url.replace('/pixeldata.mp4', '/rendered'),
+        },
+        omitQuotationForMultipartRequest: true,
+      },
+    },
     {
       namespace: '@ohif/extension-default.dataSourcesModule.dicomweb',
       sourceName: 'ohif2',

@@ -425,6 +425,12 @@ class MetadataProvider {
         };
         break;
 
+      case 'transferSyntax':
+        metadata = {
+          transferSyntaxUID: instance.TransferSyntaxUID,
+        };
+      break;
+
       default:
         return;
     }
@@ -461,6 +467,12 @@ class MetadataProvider {
   }
 
   getUIDsFromImageID(imageId) {
+    const iuri = imageIdToURI(imageId);
+    const cachedUIDs = this.imageURIToUIDs.get(iuri);
+    if (cachedUIDs) {
+      return cachedUIDs;
+    }
+
     if (imageId.startsWith('wadors:')) {
       const strippedImageId = imageId.split('/studies/')[1];
       const splitImageId = strippedImageId.split('/');

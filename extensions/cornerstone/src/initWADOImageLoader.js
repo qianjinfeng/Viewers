@@ -1,10 +1,11 @@
-import { volumeLoader } from '@cornerstonejs/core';
+import { volumeLoader, registerImageLoader } from '@cornerstonejs/core';
 import {
   cornerstoneStreamingImageVolumeLoader,
   cornerstoneStreamingDynamicImageVolumeLoader,
 } from '@cornerstonejs/core/loaders';
 import dicomImageLoader from '@cornerstonejs/dicom-image-loader';
 import { errorHandler, utils } from '@ohif/core';
+import loadImage from './loadIpfsImage';
 
 const { registerVolumeLoader } = volumeLoader;
 
@@ -19,6 +20,8 @@ export default function initWADOImageLoader(
     'cornerstoneStreamingDynamicImageVolume',
     cornerstoneStreamingDynamicImageVolumeLoader
   );
+
+  registerImageLoader('ipfs', loadImage);
 
   dicomImageLoader.init({
     maxWebWorkers: Math.min(
