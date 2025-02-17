@@ -12,6 +12,7 @@ import buildModeRoutes from './buildModeRoutes';
 import PrivateRoute from './PrivateRoute';
 import PropTypes from 'prop-types';
 import publicUrl from '../utils/publicUrl';
+import Searching from './Search';
 
 const NotFoundServer = ({
   message = 'Unable to query for studies at this time. Check your data source configuration or network connection',
@@ -61,6 +62,10 @@ const bakedInRoutes = [
   {
     path: `${publicUrl}notfoundstudy`,
     children: NotFoundStudy,
+  },
+  {
+    path: '/esearch',
+    children: Searching,
   },
   {
     path: `${publicUrl}debug`,
