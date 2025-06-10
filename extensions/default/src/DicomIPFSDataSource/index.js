@@ -179,19 +179,43 @@ function createDicomIpfsApi(dicomWebConfig, servicesManager) {
               instancesPerSeries[instance.SeriesInstanceUID] = [];
             }
 
-            const imageId = implementation.getImageIdsForInstance({
-              instance,
-            });
+            const numberOfFrames = instance.NumberOfFrames || 1;
+            const isMultiframe = numberOfFrames > 1;
+            if (isMultiframe) {
+              // Process all frames
+              for (let i = 0; i < numberOfFrames; i++) {
+                const frameNumber = i + 1;
+                const frameImageId = implementation.getImageIdsForInstance({
+                  instance,
+                  frame: frameNumber,
+                });
+                // Add imageId specific mapping to this data as the URL isn't necessarily WADO-URI.
+                metadataProvider.addImageIdToUIDs(frameImageId, {
+                  StudyInstanceUID,
+                  SeriesInstanceUID: instance.SeriesInstanceUID,
+                  SOPInstanceUID: instance.SOPInstanceUID,
+                  frameNumber: frameNumber,
+                });
 
-            instance.imageId = imageId;
+                instance.imageId = frameImageId;
+              }
+            }
+            //single frame
+            else {
+              const imageId = implementation.getImageIdsForInstance({
+                instance
+              });
+              metadataProvider.addImageIdToUIDs(imageId, {
+                StudyInstanceUID,
+                SeriesInstanceUID: instance.SeriesInstanceUID,
+                SOPInstanceUID: instance.SOPInstanceUID,
+              });
+
+              instance.imageId = imageId;
+            }
+
             instance.wadoRoot = dicomWebConfig.wadoRoot;
             instance.wadoUri = dicomWebConfig.wadoUri;
-
-            metadataProvider.addImageIdToUIDs(imageId, {
-              StudyInstanceUID,
-              SeriesInstanceUID: instance.SeriesInstanceUID,
-              SOPInstanceUID: instance.SOPInstanceUID,
-            });
 
             instancesPerSeries[instance.SeriesInstanceUID].push(instance);
           });
