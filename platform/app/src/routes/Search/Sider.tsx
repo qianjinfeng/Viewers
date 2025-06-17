@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  useSearch,
   Facet,
   Sorting,
   PagingInfo,
@@ -12,9 +13,11 @@ import ClearFilters from "./ClearFilters";
 /**
  * Sidebar - search + filters
  */
-const Filtering = () => (
-  <>
-    <Sorting
+const Filtering = () => {
+  const { wasSearched } = useSearch();
+  return (
+   <div>
+    {wasSearched && ( <Sorting
       label={'Sort by'}
       sortOptions={[
         {
@@ -41,28 +44,25 @@ const Filtering = () => (
           ]
         },
       ]}
-    />
+    />)}
     <ClearFilters />
     <Facet field="PatientSex" label="Sex" filterType="any" />
     <Facet field="StudyDate" label="Date" filterType="any" />
-    <Facet
-      field="studio"
-      label="Game Studio"
-      isFilterable={true}
-      filterType="any"
-    />
-  </>
-);
+   </div>
+  )
+};
 
 /**
  * Results header - showing per page + sorting
  */
-const Showing = () => (
-  <>
-    <PagingInfo />
-    <ResultsPerPage options={[10, 25, 50]} />
-
-  </>
-);
+const Showing = () => {
+  const { wasSearched } = useSearch();
+  return (
+   <>
+    {wasSearched && <PagingInfo />}
+    {wasSearched && <ResultsPerPage options={[10, 25, 50]} />}
+   </>
+  )
+};
 
 export { Filtering, Showing };

@@ -1,12 +1,19 @@
 import React from 'react';
 import { withSearch } from "@elastic/react-search-ui";
+import {
+  Button,
+  ButtonEnums,
+} from '@ohif/ui';
 
 function ClearFilters({ filters, clearFilters }) {
   return (
     <div>
-      <button onClick={() => clearFilters()}>
-        Clear {filters.length} Filters
-      </button>
+      <Button
+          type={ButtonEnums.type.primary}
+          size={ButtonEnums.size.medium}
+          onClick={() => clearFilters()}>
+          Clear {filters.length} Filters
+      </Button>
     </div>
   );
 }
