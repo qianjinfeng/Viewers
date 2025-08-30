@@ -57,6 +57,7 @@ function processResults(qidoStudies) {
       instances: Number(getString(qidoStudy['00201208'])) || 0, // number
       description: getString(qidoStudy['00081030']) || '',
       modalities: getString(getModalities(qidoStudy['00080060'], qidoStudy['00080061'])) || '',
+      NumInstances: Number(getString(qidoStudy['00201208'])) || 0,
     })
   );
 
